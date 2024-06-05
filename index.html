@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Search for country code, name or domain">
+    <title>GeoHelper</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main>
+    <h1>Geo<span>Helper</span></h1>
+    <label for="countryCode">Search for country code, name or domain:</label>
+    <br>
+    <input type="text" id="countryCode" name="countryCode" class="inp" max="999" min="1" placeholder="ex. +48 or poland or .pl">
+<br>
+    <button onclick="checkCountry()" class="btn btn-success btn-lg" type="submit">Search -></button>
+
+    <!-- <h2 id="result">RESULT</h2> -->
+    <h1 id="result" class="result">RESULT</h1>
+
+
+
+    <script>
+
+        function checkCountry() {
+            const searchInput = document.getElementById("countryCode").value;
+            const result = document.getElementById("result");
+
+            const countryCodes = {
+                1: {name: "United States/Canada", domain: ".us/.ca"},
+ 7: {name: "Russia/Kazakhstan", domain: ".ru/.kz"},
+ 20: {name: "Egypt", domain: ".eg"},
+ 27: {name: "South Africa", domain: ".za"},
+ 30: {name: "Greece", domain: ".gr"},
+ 31: {name: "Netherlands", domain: ".nl"},
+ 32: {name: "Belgium", domain: ".be"},
+ 33: {name: "France", domain: ".fr"},
+ 34: {name: "Spain", domain: ".es"},
+ 36: {name: "Hungary", domain: ".hu"},
+ 39: {name: "Italy", domain: ".it"},
+ 40: {name: "Romania", domain: ".ro"},
+ 41: {name: "Switzerland", domain: ".ch"},
+ 43: {name: "Austria", domain: ".at"},
+ 44: {name: "Great Britain", domain: ".uk"},
+ 45: {name: "Denmark", domain: ".dk"},
+ 46: {name: "Sweden", domain: ".se"},
+ 47: {name: "Norway", domain: ".no"},
+ 48: {name: "Poland", domain: ".pl"},
+ 49: {name: "Germany", domain: ".de"},
+ 51: {name: "Peru", domain: ".pe"},
+ 52: {name: "Mexico", domain: ".mx"},
+ 53: {name: "Cuba", domain: ".cu"},
+ 54: {name: "Argentina", domain: ".ar"},
+ 55: {name: "Brazil", domain: ".br"},
+ 56: {name: "Chile", domain: ".cl"},
+ 57: {name: "Colombia", domain: ".co"},
+ 58: {name: "Venezuela", domain: ".ve"},
+ 60: {name: "Malaysia", domain: ".my"},
+ 61: {name: "Australia", domain: ".au"},
+ 62: {name: "Indonesia", domain: ".id"},
+ 63: {name: "Philippines", domain: ".ph"},
+ 64: {name: "New Zealand", domain: ".nz"},
+ 65: {name: "Singapore", domain: ".sg"},
+ 66: {name: "Thailand", domain: ".th"},
+ 81: {name: "Japan", domain: ".jp"},
+ 82: {name: "South Korea", domain: ".kr"},
+ 84: {name: "Vietnam", domain: ".vn"},
+ 86: {name: "China", domain: ".cn"},
+ 90: {name: "Turkiye", domain: ".tr"},
+ 91: {name: "India", domain: ".in"},
+ 92: {name: "Pakistan", domain: ".pk"},
+ 93: {name: "Afghanistan", domain: ".af"},
+ 94: {name: "Sri Lanka", domain: ".lk"},
+ 95: {name: "Burma", domain: ".mm"},
+ 98: {name: "Iran", domain: ".ir"},
+ 211: {name: "South Sudan", domain: ".ss"},
+ 212: {name: "Morocco", domain: ".ma"},
+ 213: {name: "Algeria", domain: ".dz"},
+ 216: {name: "Tunisia", domain: ".tn"},
+ 218: {name: "Libya", domain: ".ly"},
+ 220: {name: "Gambia", domain: ".gm"},
+ 221: {name: "Senegal", domain: ".sn"},
+ 222: {name: "Mauritania", domain: ".mr"},
+ 223: {name: "Mali", domain: ".ml"},
+ 224: {name: "Guinea", domain: ".gn"},
+ 225: {name: "Ivory Coast", domain: ".ci"},
+ 226: {name: "Burkina Faso", domain: ".bf"},
+ 227: {name: "Niger", domain: ".ne"},
+ 228: {name: "Togo", domain: ".tg"},
+ 229: {name: "Benin", domain: ".bj"},
+ 230: {name: "Mauritius", domain: ".mu"},
+ 231: {name: "Liberia", domain: ".lr"},
+ 232: {name: "Sierra Leone", domain: ".sl"},
+ 233: {name: "Ghana", domain: ".gh"},
+ 234: {name: "Nigeria", domain: ".ng"},
+ 235: {name: "Chad", domain: ".td"},
+ 236: {name: "Central African Republic", domain: ".cf"},
+ 237: {name: "Camerun", domain: ".cm"},
+ 238: {name: "Cape Verde", domain: ".cv"},
+ 239: {name: "Sao Tome and Principe", domain: ".st"},
+ 240: {name: "Equatorial Guinea", domain: ".gq"},
+ 241: {name: "Gabon", domain: ".ga"},
+ 242: {name: "Congo (Brazzaville)", domain: ".cg"},
+ 243: {name: "Congo (Kinshasa)", domain: ".cd"},
+ 244: {name: "Angola", domain: ".ao"},
+ 245: {name: "Guinea-Bissau", domain: ".gw"},
+ 246: {name: "Diego Garcia", domain: ".io"},
+ 247: {name: "Ascension Island", domain: ".ac"},
+ 248: {name: "Seychelles", domain: ".sc"},
+ 249: {name: "Sudan", domain: ".sd"},
+ 250: {name: "Rwanda", domain: ".rw"},
+ 251: {name: "Ethiopia", domain: ".et"},
+ 252: {name: "Somalia", domain: ".so"},
+ 253: {name: "Djibouti", domain: ".dj"},
+ 254: {name: "Kenya", domain: ".ke"},
+ 255: {name: "Tanzania", domain: ".tz"},
+ 256: {name: "Uganda", domain: ".ug"},
+ 257: {name: "Burundi", domain: ".bi"},
+ 258: {name: "Mozambique", domain: ".mz"},
+ 260: {name: "Zambia", domain: ".zm"},
+ 261: {name: "Madagascar", domain: ".mg"},
+ 262: {name: "Reunion", domain: ".re"},
+ 263: {name: "Zimbabwe", domain: ".zw"},
+ 264: {name: "Namibia", domain: ".na"},
+ 265: {name: "Malawi", domain: ".mw"},
+ 266: {name: "Lesotho", domain: ".ls"},
+ 267: {name: "Botswana", domain: ".bw"},
+ 268: {name: "Eswatini", domain: ".sz"},
+ 269: {name: "Comoros", domain: ".km"},
+ 290: {name: "Saint Helena", domain: ".sh"},
+ 291: {name: "Eritrea", domain: ".er"},
+ 297: {name: "Aruba", domain: ".aw"},
+ 298: {name: "Faroe Islands", domain: ".fo"},
+ 299: {name: "Greenland", domain: ".gl"},
+ 350: {name: "Gibraltar", domain: ".gi"},
+ 351: {name: "Portugal", domain: ".pt"},
+ 352: {name: "Luxembourg", domain: ".lu"},
+ 353: {name: "Ireland", domain: ".ie"},
+ 354: {name: "Iceland", domain: ".is"},
+ 355: {name: "Albania", domain: ".al"},
+ 356: {name: "Malta", domain: ".mt"},
+ 357: {name: "Cyprus", domain: ".cy"},
+ 358: {name: "Finlandia", domain: ".fi"},
+ 359: {name: "Bulgaria", domain: ".bg"},
+ 370: {name: "Lithuania", domain: ".lt"},
+ 371: {name: "Latvia", domain: ".lv"},
+ 372: {name: "Estonia", domain: ".ee"},
+ 373: {name: "Moldova", domain: ".md"},
+ 374: {name: "Armenia", domain: ".am"},
+ 375: {name: "Belarus", domain: ".by"},
+ 376: {name: "Andorra", domain: ".ad"},
+ 377: {name: "Monaco", domain: ".mc"},
+ 378: {name: "San Marino", domain: ".sm"},
+ 379: {name: "Vatican", domain: ".va"},
+ 380: {name: "Ukraine", domain: ".ua"},
+ 381: {name: "Serbia", domain: ".rs"},
+ 382: {name: "Montenegro", domain: ".me"},
+ 383: {name: "Kosovo", domain: ".xk"},
+ 385: {name: "Croatia", domain: ".hr"},
+ 386: {name: "Slovenia", domain: ".si"},
+ 387: {name: "Bosnia and Herzegovina", domain: ".ba"},
+ 389: {name: "North Macedonia", domain: ".mk"},
+ 420: {name: "Czech Republic", domain: ".cz"},
+ 421: {name: "Slovakia", domain: ".sk"},
+ 423: {name: "Liechtenstein", domain: ".li"},
+ 500: {name: "Falkland Islands", domain: ".fk"},
+ 501: {name: "Belize", domain: ".bz"},
+ 502: {name: "Guatemala", domain: ".gt"},
+ 503: {name: "El Salvador", domain: ".sv"},
+ 504: {name: "Honduras", domain: ".hn"},
+ 505: {name: "Nicaragua", domain: ".ni"},
+ 506: {name: "Costa Rica", domain: ".cr"},
+ 507: {name: "Panama", domain: ".pa"},
+ 508: {name: "Saint Pierre i Miquelon", domain: ".pm"},
+ 509: {name: "Haiti", domain: ".ht"},
+ 590: {name: "Guadeloupe", domain: ".gp"},
+ 591: {name: "Bolivia", domain: ".bo"},
+ 592: {name: "Guyana", domain: ".gy"},
+ 593: {name: "Ecuador", domain: ".ec"},
+ 594: {name: "French Guiana", domain: ".gf"},
+ 595: {name: "Paraguay", domain: ".py"},
+ 596: {name: "Martinique", domain: ".mq"},
+ 597: {name: "Suriname", domain: ".sr"},
+ 598: {name: "Uruguay", domain: ".uy"},
+ 599: {name: "Netherlands Antilles", domain: ".an"},
+ 670: {name: "East Timor", domain: ".tl"},
+ 672: {name: "Norfolk", domain: ".nf"},
+ 673: {name: "Brunei", domain: ".bn"},
+ 674: {name: "Nauru", domain: ".nr"},
+ 675: {name: "Papua New Guinea", domain: ".pg"},
+ 676: {name: "Tonga", domain: ".to"},
+ 677: {name: "Solomon Islands", domain: ".sb"},
+ 678: {name: "Vanuatu", domain: ".vu"},
+ 679: {name: "Fiji", domain: ".fj"},
+ 680: {name: "Palau", domain: ".pw"},
+ 681: {name: "Wallis and Futuna", domain: ".wf"},
+ 682: {name: "Cook Islands", domain: ".ck"},
+ 683: {name: "Niue", domain: ".nu"},
+ 685: {name: "Samoa", domain: ".ws"},
+ 686: {name: "Kiribati", domain: ".ki"},
+ 687: {name: "New Caledonia", domain: ".nc"},
+ 688: {name: "Tuvalu", domain: ".tv"},
+ 689: {name: "French Polynesia", domain: ".pf"},
+ 690: {name: "Tokelau", domain: ".tk"},
+ 691: {name: "Micronesia", domain: ".fm"},
+ 692: {name: "Marshall Islands", domain: ".mh"},
+ 850: {name: "North Korea", domain: ".kp"},
+ 852: {name: "Hong Kong", domain: ".hk"},
+ 853: {name: "Makau", domain: ".mo"},
+ 855: {name: "Cambodia", domain: ".kh"},
+ 856: {name: "Laos", domain: ".la"},
+ 880: {name: "Bangladesh", domain: ".bd"},
+ 886: {name: "Taiwan", domain: ".tw"},
+ 960: {name: "Maldives", domain: ".mv"},
+ 961: {name: "Lebanon", domain: ".lb"},
+ 962: {name: "Jordan", domain: ".jo"},
+ 963: {name: "Syria", domain: ".sy"},
+ 964: {name: "Iraq", domain: ".iq"},
+ 965: {name: "Kuwait", domain: ".kw"},
+ 966: {name: "Saudi Arabia", domain: ".sa"},
+ 967: {name: "Yemen", domain: ".ye"},
+ 968: {name: "Oman", domain: ".om"},
+ 970: {name: "Palestine", domain: ".ps"},
+ 971: {name: "United Arab Emirates", domain: ".ae"},
+ 972: {name: "Israel", domain: ".il"},
+ 973: {name: "Bahrain", domain: ".bh"},
+ 974: {name: "Qatar", domain: ".qa"},
+ 975: {name: "Bhutan", domain: ".bt"},
+ 976: {name: "Mongolia", domain: ".mn"},
+ 977: {name: "Nepal", domain: ".np"},
+ 992: {name: "Tajikistan", domain: ".tj"},
+ 993: {name: "Turkmenistan", domain: ".tm"},
+ 994: {name: "Azerbaijan", domain: ".az"},
+ 995: {name: "Georgia", domain: ".ge"},
+ 996: {name: "Kyrgyzstan", domain: ".kg"},
+ 998: {name: "Uzbekistan", domain: ".uz"}
+            };
+
+            let found = false;
+            for (const [code, {name, domain}] of Object.entries(countryCodes)) {
+                if (searchInput === code || searchInput === name.toLowerCase() || searchInput === domain) {
+                    result.textContent = `+${code} ${name} ${domain}`;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) {
+                result.textContent = "unknown country code";
+            }
+        }
+    </script>
+</main>
+</body>
+</html>
